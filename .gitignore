@@ -1,0 +1,7 @@
+# Dati reali caricati/estratti localmente: non vanno MAI committati.
+data/local/
+*.local.json
+
+.DS_Store
+node_modules/
+.netlify/

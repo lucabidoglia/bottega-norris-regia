@@ -1,0 +1,559 @@
+
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:block;src:url('../assets/fonts/playfair-display-700-normal.ttf') format('truetype')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:block;src:url('../assets/fonts/playfair-display-900-normal.ttf') format('truetype')}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:400;font-display:block;src:url('../assets/fonts/space-grotesk-400-normal.ttf') format('truetype')}
+@font-face{font-family:'Space Grotesk';font-style:normal;font-weight:500;font-display:block;src:url('../assets/fonts/space-grotesk-500-normal.ttf') format('truetype')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:block;src:url('../assets/fonts/jetbrains-mono-400-normal.ttf') format('truetype')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:block;src:url('../assets/fonts/jetbrains-mono-500-normal.ttf') format('truetype')}
+/* ============================================================
+   MASTRO ORE — Formato Rough Cut, fondo scuro
+   CSS scritto a mano. Nessuna utility class. Nessun framework.
+
+   La palette non contiene il nero: il terreno e --ink, che il
+   formato definisce gia come "fondo scuro, testo primario".
+   Contrasti verificati: --mist 12,77 su --ink; --slate-2 4,61;
+   --slate 2,97, quindi solo filetti e mai testo.
+   ============================================================ */
+
+:root{
+  /* EMENDAMENTO ALLA PALETTE — una sola tinta aggiunta, su richiesta.
+     --ink-0 e derivata da --ink conservandone tinta (207,3°) e saturazione
+     (34%): cambia solo la luminosita, dal 13% al 6,5%. Serve perche la lista
+     dichiarata non contiene nulla di piu scuro di --ink. Tutto il resto
+     resta dentro la palette originale. */
+  --ink-0:#0B1116;
+  --ink:#15212B; --ink-2:#1D2D3A;
+  --slate:#5A6B78; --slate-2:#7C8A95;
+  --mist:#E7E3DA; --mist-2:#F2EFE8;
+  --paper:#FBFAF7;
+  --amber:#E0A100; --amber-d:#B58200;
+  --cherry:#C2362F;
+  --line:#D8D2C6;
+  --s1:6px; --s2:14px; --s3:22px; --s4:38px; --s5:62px; --s6:98px;
+  --serif:'Playfair Display'; --sans:'Space Grotesk'; --mono:'JetBrains Mono';
+}
+
+*{box-sizing:border-box; margin:0; padding:0}
+html{-webkit-text-size-adjust:100%; background:var(--ink-0)}
+body{
+  background:var(--ink-0); color:var(--mist);
+  font-family:var(--sans); font-weight:400; font-size:15px; line-height:1.55;
+  text-align:left; hyphens:none;
+}
+::selection{background:var(--amber); color:var(--ink-0)}
+
+/* ---------- tipografia ---------- */
+h1,h2,h3{font-family:var(--serif); font-weight:900; color:var(--paper)}
+h1{font-size:clamp(54px,8.4vw,106px); letter-spacing:-0.035em; line-height:0.9}
+h2{font-size:clamp(27px,3.1vw,42px); font-weight:700; letter-spacing:-0.025em; line-height:1.02}
+h3{font-size:20px; font-weight:700; letter-spacing:-0.02em; line-height:1.1}
+p{max-width:62ch}
+b,strong{font-weight:500; color:var(--paper)}
+em{font-style:normal; font-weight:500}
+
+.kicker{font-family:var(--mono); font-size:10px; font-weight:500;
+  text-transform:uppercase; letter-spacing:0.24em; color:var(--line)}
+.mono{font-family:var(--mono); font-variant-numeric:tabular-nums}
+.rule{border:0; border-top:1px solid var(--slate); width:100%}
+.rule-ink{border:0; border-top:1px solid var(--mist); width:100%}
+
+/* ---------- impianto asimmetrico ---------- */
+.sheet{padding-left:var(--s5); padding-right:var(--s3); max-width:1560px}
+@media(max-width:900px){.sheet{padding-left:var(--s3); padding-right:var(--s2)}}
+
+/* ---------- marchio: tacche di computo ----------
+   quattro aste e la quinta di traverso, la marca di conteggio piu antica
+   della tenuta dei conti. Costruita a mano, nessuna libreria di icone. */
+.logo{display:block; margin-bottom:var(--s3)}
+.logo svg{display:block; overflow:visible}
+
+/* ---------- testata ---------- */
+header{padding-top:var(--s5); padding-bottom:var(--s3)}
+.masthead{display:grid; grid-template-columns:minmax(0,1fr) 19ch; gap:var(--s4); align-items:end}
+.masthead h1{margin-left:-0.06em}
+.masthead .sub{margin-top:var(--s3); font-size:17.5px; line-height:1.5;
+  max-width:44ch; color:var(--mist)}
+.masthead .stamp{font-family:var(--mono); font-size:9.5px; letter-spacing:0.24em;
+  text-transform:uppercase; color:var(--line); text-align:right; line-height:2.1;
+  padding-bottom:6px}
+@media(max-width:900px){.masthead{grid-template-columns:1fr} .masthead .stamp{text-align:left}}
+
+/* ---------- filtri ---------- */
+.filters{
+  border-top:2px solid var(--mist); border-bottom:1px solid var(--slate);
+  padding:var(--s3) 0 var(--s2); display:flex; flex-wrap:wrap;
+  align-items:flex-end; margin-top:var(--s4);
+}
+.field{padding-right:var(--s3); margin-right:var(--s3); border-right:1px solid var(--slate)}
+.field:last-of-type{border-right:0}
+.field label{display:block; font-family:var(--mono); font-size:9px; font-weight:500;
+  letter-spacing:0.24em; text-transform:uppercase; color:var(--slate-2); margin-bottom:var(--s1)}
+select{
+  appearance:none; -webkit-appearance:none;
+  font-family:var(--sans); font-size:13.5px; font-weight:500; color:var(--paper);
+  background:transparent; border:0; border-bottom:1px solid var(--slate-2);
+  border-radius:0; padding:2px 16px 3px 0; min-width:148px; max-width:250px; cursor:pointer;
+}
+select option{background:var(--ink-2); color:var(--mist)}
+select:focus{outline:0; border-bottom-color:var(--amber); border-bottom-width:2px; padding-bottom:2px}
+.field.wide select{min-width:196px}
+.filters .acts{margin-left:auto; display:flex; gap:var(--s2); align-items:flex-end}
+
+button{font-family:var(--mono); font-size:10px; font-weight:500; letter-spacing:0.24em;
+  text-transform:uppercase; color:var(--mist); background:transparent;
+  border:1px solid var(--slate-2); border-radius:0; padding:9px 15px; cursor:pointer;
+  transition:background 110ms linear, color 110ms linear, border-color 110ms linear}
+button:hover{background:var(--mist); color:var(--ink); border-color:var(--mist)}
+button.solid{background:var(--mist); color:var(--ink); border-color:var(--mist)}
+button.solid:hover{background:var(--paper); border-color:var(--paper)}
+button.ghost{border-color:var(--slate); color:var(--slate-2)}
+button.ghost:hover{background:transparent; color:var(--paper); border-color:var(--paper)}
+button:disabled{border-color:var(--slate); color:var(--slate); cursor:not-allowed}
+button:disabled:hover{background:transparent; color:var(--slate)}
+
+.scope{font-family:var(--mono); font-size:10px; letter-spacing:0.14em;
+  color:var(--line); padding:var(--s2) 0 0; text-transform:uppercase}
+.scope b{color:var(--paper); font-weight:500}
+
+/* ---------- tab numerate ---------- */
+.tabs{display:flex; border-bottom:1px solid var(--slate); margin-top:var(--s4)}
+.tab{display:flex; align-items:baseline; gap:var(--s2);
+  padding:var(--s2) var(--s3) var(--s2) 0; margin-right:var(--s3);
+  border:0; border-bottom:3px solid transparent; background:transparent; cursor:pointer;
+  text-transform:none; letter-spacing:0; font-family:var(--sans);
+  font-size:15.5px; font-weight:400; color:var(--slate-2); margin-bottom:-1px}
+.tab .n{font-family:var(--mono); font-size:10px; letter-spacing:0.24em; color:var(--slate)}
+.tab:hover{background:transparent; color:var(--mist); border-color:transparent}
+.tab[aria-selected="true"]{color:var(--paper); font-weight:500; border-bottom-color:var(--paper)}
+.tab[aria-selected="true"] .n{color:var(--paper)}
+@media(max-width:900px){.tabs{flex-wrap:wrap}}
+
+/* ---------- fascia KPI: asimmetrica, non a scacchiera ---------- */
+.kpis{display:grid; grid-template-columns:1.7fr 1fr 1fr 1fr;
+  border-bottom:1px solid var(--slate); padding-top:var(--s4)}
+.kpi{padding:0 var(--s3) var(--s4) 0; border-right:1px solid var(--slate)}
+.kpi:last-child{border-right:0}
+.kpi + .kpi{padding-left:var(--s3)}
+.kpi .t{font-family:var(--mono); font-size:9px; letter-spacing:0.24em;
+  text-transform:uppercase; color:var(--slate-2); display:block; margin-bottom:var(--s3)}
+.kpi .v{font-family:var(--serif); font-weight:900; color:var(--paper);
+  font-size:clamp(23px,2.5vw,31px); letter-spacing:-0.03em; line-height:0.94; display:block}
+.kpi:first-child .v{font-size:clamp(40px,5.3vw,68px); letter-spacing:-0.04em}
+.kpi .d{font-family:var(--mono); font-size:10.5px; font-weight:500; letter-spacing:0.1em;
+  color:var(--mist); margin-top:var(--s3); display:block}
+.kpi .d.alarm{background:var(--cherry); color:var(--paper); padding:3px 7px;
+  display:inline-block; margin-top:var(--s3)}
+.kpi .s{font-size:12px; color:var(--line); margin-top:var(--s1); display:block}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}
+  .kpi{border-bottom:1px solid var(--slate); padding-bottom:var(--s3)}
+  .kpi:nth-child(2n){border-right:0} .kpi:nth-child(odd){padding-left:0}}
+
+/* ---------- dittico dei grafici ---------- */
+.spread{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s4);
+  padding-top:var(--s4); padding-bottom:var(--s5); align-items:start}
+@media(max-width:1100px){.spread{grid-template-columns:1fr; gap:var(--s5)}}
+.block > .kicker{display:block; margin-bottom:var(--s1)}
+.block h3{margin-bottom:var(--s1)}
+.block .cap{font-size:12.5px; color:var(--line); max-width:52ch; margin-bottom:var(--s3)}
+.block-h{display:flex; justify-content:space-between; align-items:flex-start; gap:var(--s3)}
+.spread .block-h{min-height:50px}
+.spread .cap{min-height:34px}
+
+/* ---------- linea costruita a mano ----------
+   ogni segmento e un div fra due punti; la diagonale nasce da un gradiente
+   d'angolo, esatto a qualunque larghezza. In salita serve «to bottom right»,
+   in discesa «to top right». */
+.lchart{position:relative; height:244px; border-bottom:1px solid var(--mist);
+  margin-top:var(--s3)}
+.lchart i.grid{position:absolute; left:0; right:0; height:0; border-top:1px solid var(--slate)}
+.lchart .seg{position:absolute; border:0}
+.lchart .pt{position:absolute; width:5px; height:5px; background:var(--amber);
+  transform:translate(-50%,50%)}
+.lchart .pt.prev{background:var(--ink-0); border:1px solid var(--slate-2)}
+.lchart .cap-v{position:absolute; right:0; font-family:var(--mono); font-size:9px;
+  letter-spacing:0.14em; color:var(--line); background:var(--ink-0); padding-left:7px}
+.laxis{position:relative; height:14px; margin-top:var(--s1)}
+.laxis span{position:absolute; transform:translateX(-50%); font-family:var(--mono);
+  font-size:9px; letter-spacing:0.14em; text-transform:uppercase; color:var(--slate-2)}
+.laxis span:first-child{transform:none}
+.laxis span:last-child{transform:translateX(-100%)}
+.laxis span:only-child{transform:translateX(-50%)}
+.legend{display:flex; gap:var(--s3); margin-top:var(--s2);
+  font-family:var(--mono); font-size:9px; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--slate-2)}
+.legend i{display:inline-block; width:18px; height:0; border-top:2.5px solid var(--amber);
+  margin-right:7px; vertical-align:middle}
+.legend i.prev{border-top:1px solid var(--slate-2)}
+
+/* ---------- classifica orizzontale ----------
+   pareggia l'altezza della linea: con dieci voci le righe stanno nella misura
+   naturale, con meno voci si distribuiscono fino a un tetto */
+.hchart{border-top:1px solid var(--slate); min-height:291px;
+  display:flex; flex-direction:column}
+.hrow{display:grid; grid-template-columns:23ch minmax(0,1fr) 12ch;
+  align-items:center; gap:var(--s2); padding:7px 0;
+  border-bottom:1px solid var(--slate); flex:1 1 auto; max-height:44px}
+.hrow .lbl{font-size:13px; color:var(--mist); overflow:hidden;
+  text-overflow:ellipsis; white-space:nowrap}
+.hrow .track{position:relative; height:14px}
+.hrow .fill{position:absolute; left:0; top:0; height:100%; background:var(--slate-2)}
+.hrow .fill.prev{background:transparent; border:1px solid var(--slate); height:100%}
+.hrow .fill.peak{background:var(--paper)}
+.hrow .val{font-family:var(--mono); font-size:11.5px; font-weight:500; text-align:right;
+  color:var(--paper); font-variant-numeric:tabular-nums}
+.hstack{display:flex; height:30px; border:1px solid var(--slate); margin-bottom:var(--s3)}
+.hstack span{display:block; height:100%}
+.hstack .s1{background:var(--mist)}
+.hstack .s2{background:var(--slate-2)}
+.hstack .s3{background:var(--slate)}
+.hstack .s4{background:var(--ink-2)}
+.hstack .s5{background:repeating-linear-gradient(45deg,var(--slate-2) 0 3px,var(--ink-0) 3px 6px)}
+.skey{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--s1) var(--s3)}
+.skey div{font-family:var(--mono); font-size:9.5px; letter-spacing:0.12em;
+  color:var(--line); display:flex; align-items:center; gap:var(--s1);
+  padding:var(--s1) 0; border-bottom:1px solid var(--slate)}
+.skey i{width:11px; height:11px; flex:none}
+.skey b{color:var(--paper); font-weight:500; margin-left:auto}
+
+/* ---------- tabella: blocco denso ---------- */
+.tablewrap{overflow-x:auto; padding-bottom:var(--s5)}
+table{width:100%; border-collapse:collapse}
+thead th{font-family:var(--mono); font-size:9px; font-weight:500; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--slate-2); text-align:right;
+  padding:0 var(--s2) var(--s1) 0; border-bottom:1px solid var(--mist);
+  cursor:pointer; white-space:nowrap; user-select:none}
+thead th:first-child{text-align:left; padding-left:0}
+thead th:hover{color:var(--paper)}
+thead th[aria-sort]{color:var(--paper)}
+tbody td{font-family:var(--mono); font-size:11.5px; font-variant-numeric:tabular-nums;
+  color:var(--mist); text-align:right; padding:5px var(--s2) 5px 0;
+  border-bottom:1px solid var(--slate); white-space:nowrap}
+tbody td:first-child{font-family:var(--sans); font-size:13px; color:var(--paper);
+  text-align:left; padding-left:0; white-space:normal}
+tbody tr:hover td{background:var(--ink)}
+tbody tr.total td{border-bottom:0; border-top:1px solid var(--mist);
+  color:var(--paper); font-weight:500; padding-top:var(--s1)}
+.tnum{font-family:var(--mono); font-variant-numeric:tabular-nums}
+
+/* ---------- piano d'azione: lastra di lettura ---------- */
+.plan{background:var(--ink); border-top:2px solid var(--mist);
+  padding:var(--s5) var(--s5) var(--s6) var(--s5); margin-left:calc(var(--s5) * -1);
+  margin-right:calc(var(--s3) * -1)}
+@media(max-width:900px){.plan{padding:var(--s4) var(--s3) var(--s5);
+  margin-left:calc(var(--s3) * -1); margin-right:calc(var(--s2) * -1)}}
+.plan-h{display:grid; grid-template-columns:34% minmax(0,1fr); gap:var(--s5);
+  padding-bottom:var(--s4)}
+@media(max-width:1100px){.plan-h{grid-template-columns:1fr; gap:var(--s3)}}
+.plan .lead{font-size:14.5px; line-height:1.65; color:var(--mist); max-width:54ch}
+.finding{display:grid; grid-template-columns:34% minmax(0,1fr); gap:var(--s5);
+  padding:var(--s4) 0; border-top:1px solid var(--slate)}
+@media(max-width:1100px){.finding{grid-template-columns:1fr; gap:var(--s2); padding:var(--s3) 0}}
+.finding .head{padding-left:var(--s2); border-left:2px solid var(--slate)}
+.finding.alta .head{border-left-color:var(--cherry)}
+.finding.ok .head, .finding.alta.muted .head{border-left-color:var(--mist)}
+.finding .pri{display:block; font-family:var(--mono); font-size:9px; font-weight:500;
+  letter-spacing:0.24em; text-transform:uppercase; color:var(--line); margin-bottom:var(--s2)}
+.finding.alta .pri{background:var(--cherry); color:var(--paper);
+  display:inline-block; padding:3px 7px; margin-bottom:var(--s2)}
+.finding.alta.muted .pri{background:transparent; color:var(--paper); padding:0}
+.finding h4{font-family:var(--serif); font-weight:700; font-size:23px; color:var(--paper);
+  letter-spacing:-0.025em; line-height:1.1}
+.finding .body p{font-size:15.5px; line-height:1.68; color:var(--mist); max-width:58ch}
+.steps{margin-top:var(--s3)}
+.steps > .kicker{display:block; margin-bottom:var(--s1)}
+.steps .step{display:grid; grid-template-columns:3.4ch minmax(0,1fr); gap:var(--s2);
+  align-items:start; padding:var(--s2) 0; max-width:58ch;
+  border-top:1px solid var(--slate)}
+.steps .step:first-of-type{border-top:0; padding-top:var(--s1)}
+.steps .step > .n{font-family:var(--mono); font-size:9.5px; letter-spacing:0.14em;
+  color:var(--line); padding-top:6px}
+.steps .step > p{max-width:none; font-size:14.5px; line-height:1.58; color:var(--mist)}
+.ref{margin-top:var(--s3); padding-top:var(--s2); border-top:1px solid var(--slate);
+  font-size:12.5px; line-height:1.65; color:var(--line); max-width:64ch}
+.ref b{color:var(--mist); font-weight:500}
+.ref .kicker{display:block; margin-bottom:3px}
+
+/* ---------- colophon ---------- */
+.colophon{border-top:1px solid var(--slate); padding:var(--s3) 0 var(--s5);
+  font-family:var(--mono); font-size:9.5px; letter-spacing:0.12em; color:var(--line);
+  max-width:96ch; line-height:2.1}
+.colophon b{color:var(--mist); font-weight:500}
+
+/* ============================================================
+   MASCHERE — foglio chiaro posato sul mastro.
+   Il cambio di superficie e il dispositivo di stacco, non l'ombra.
+   ============================================================ */
+.overlay{position:fixed; inset:0; background:var(--ink-0); z-index:60;
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:var(--s4) var(--s3); overflow-y:auto}
+.overlay[hidden]{display:none}
+.dialog{background:var(--paper); color:var(--ink); border:1px solid var(--mist);
+  box-shadow:10px 10px 0 var(--ink-2); width:100%; max-width:840px}
+.dialog.wide{max-width:1100px}
+.dialog h2, .dialog h3, .dialog h4{color:var(--ink)}
+.dialog b, .dialog strong{color:var(--ink)}
+.dialog .kicker{color:var(--slate)}
+.dialog-top{display:flex; justify-content:space-between; align-items:flex-start;
+  gap:var(--s3); padding:var(--s4) var(--s5) var(--s3); border-bottom:1px solid var(--ink)}
+.dialog-top h2{font-size:clamp(25px,2.6vw,34px)}
+.dialog-top .st{font-family:var(--mono); font-size:9.5px; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--slate); margin-top:var(--s2)}
+.dialog-body{padding:var(--s4) var(--s5) var(--s5)}
+@media(max-width:760px){.dialog-top{padding:var(--s3) var(--s3) var(--s2)}
+  .dialog-body{padding:var(--s3)}}
+
+.dialog button{color:var(--ink); border-color:var(--ink); background:transparent}
+.dialog button:hover{background:var(--ink); color:var(--paper); border-color:var(--ink)}
+.dialog button.solid{background:var(--ink); color:var(--paper)}
+.dialog button.solid:hover{background:var(--ink-2)}
+.dialog button.ghost{border-color:var(--line); color:var(--slate)}
+.dialog button.ghost:hover{background:var(--mist); color:var(--ink); border-color:var(--slate)}
+.dialog button:disabled{border-color:var(--line); color:var(--slate-2)}
+.dialog button:disabled:hover{background:transparent; color:var(--slate-2)}
+
+.switch{display:inline-flex; border:1px solid var(--ink)}
+.switch button{border:0; border-right:1px solid var(--ink); padding:8px 17px}
+.switch button:last-child{border-right:0}
+.switch button[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.dialog select{color:var(--ink); border-bottom-color:var(--ink)}
+.dialog select option{background:var(--paper); color:var(--ink)}
+
+.msec{margin-top:var(--s5)}
+.msec > .kicker{display:block; margin-bottom:var(--s1)}
+.msec .hint{font-size:13.5px; line-height:1.6; color:var(--slate);
+  max-width:62ch; margin-bottom:var(--s3)}
+.headvar{border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  padding:var(--s4) 0; margin-top:var(--s4)}
+.headvar .big{font-family:var(--serif); font-weight:900; font-size:clamp(38px,4.6vw,60px);
+  letter-spacing:-0.04em; line-height:0.94; color:var(--amber)}
+.headvar .meta{font-family:var(--mono); font-size:10px; letter-spacing:0.18em;
+  color:var(--slate); margin-top:var(--s3); text-transform:uppercase; line-height:1.9}
+.brow{display:grid; grid-template-columns:26ch minmax(0,1fr) 13ch; align-items:center;
+  gap:var(--s2); padding:7px 0; border-bottom:1px solid var(--line); font-size:13.5px}
+.brow .track{position:relative; height:14px; background:var(--mist)}
+.brow .fill{position:absolute; top:0; left:0; height:100%; background:var(--ink)}
+.brow .fill.neg{background:transparent; border:1px solid var(--slate)}
+.brow .val{font-family:var(--mono); font-size:11.5px; font-weight:500; text-align:right;
+  font-variant-numeric:tabular-nums}
+.brow.tot{border-bottom:0; border-top:1px solid var(--ink); font-weight:500; padding-top:var(--s2)}
+.factors{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 var(--s4)}
+@media(max-width:760px){.factors{grid-template-columns:1fr}}
+.fchip{display:flex; align-items:center; gap:var(--s2); padding:8px 0;
+  border-bottom:1px solid var(--line); font-size:13.5px; cursor:pointer; user-select:none}
+.fchip input{appearance:none; -webkit-appearance:none; width:13px; height:13px; flex:none;
+  border:1px solid var(--ink); background:var(--paper); cursor:pointer; border-radius:0}
+.fchip input:checked{background:var(--ink); box-shadow:inset 0 0 0 2px var(--paper)}
+.fchip.on{font-weight:500}
+textarea{width:100%; margin-top:var(--s3); background:var(--mist-2); color:var(--ink);
+  border:1px solid var(--line); border-radius:0; padding:var(--s2);
+  font-family:var(--sans); font-size:13.5px; min-height:66px; resize:vertical}
+textarea:focus{outline:0; border-color:var(--ink)}
+.summary{margin-top:var(--s4); border-left:2px solid var(--amber); padding-left:var(--s3);
+  font-size:14.5px; line-height:1.62; max-width:64ch}
+
+/* ---------- console comandi ---------- */
+.cmdbar{display:grid; grid-template-columns:minmax(0,1fr) auto auto; gap:var(--s2)}
+.cmdbar input{font-family:var(--sans); font-size:17px; font-weight:400; color:var(--ink);
+  background:transparent; border:0; border-bottom:2px solid var(--ink); border-radius:0;
+  padding:var(--s2) 0}
+.cmdbar input:focus{outline:0; border-bottom-color:var(--amber)}
+.cmdbar input::placeholder{color:var(--slate-2)}
+.cmdopts{display:flex; flex-wrap:wrap; gap:var(--s3); align-items:center;
+  margin-top:var(--s3); font-family:var(--mono); font-size:9.5px; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--slate)}
+.cmdopts label{display:flex; align-items:center; gap:var(--s1); cursor:pointer}
+.cmdopts input{appearance:none; -webkit-appearance:none; width:12px; height:12px;
+  border:1px solid var(--ink); background:var(--paper); cursor:pointer; border-radius:0}
+.cmdopts input:checked{background:var(--ink); box-shadow:inset 0 0 0 2px var(--paper)}
+#cmd_status{color:var(--slate)}
+#cmd_mic[aria-pressed="true"]{background:var(--ink); color:var(--paper)}
+.examples{margin-top:var(--s4); border-top:1px solid var(--line)}
+.examples button{display:block; width:100%; text-align:left; border:0;
+  border-bottom:1px solid var(--line); padding:9px 0; font-family:var(--sans);
+  font-size:14px; letter-spacing:0; text-transform:none; color:var(--slate)}
+.examples button:hover{background:transparent; color:var(--ink); padding-left:var(--s1)}
+.examples button::before{content:"— "; font-family:var(--mono); color:var(--slate-2)}
+.reading{margin-top:var(--s5); border-left:2px solid var(--amber); padding-left:var(--s3);
+  font-size:15px; line-height:1.65; max-width:68ch}
+.note{margin-top:var(--s3); padding-left:var(--s3); border-left:1px solid var(--line);
+  font-size:13.5px; line-height:1.6; color:var(--slate); max-width:72ch}
+.note.warn{border-left-color:var(--cherry)}
+.note b{color:var(--ink); font-weight:500}
+.interp{margin-top:var(--s4); font-family:var(--mono); font-size:10px; letter-spacing:0.16em;
+  line-height:2.1; text-transform:uppercase; color:var(--slate)}
+.interp b{color:var(--ink); font-weight:500}
+.cmdacts{display:flex; flex-wrap:wrap; gap:var(--s2); margin-top:var(--s5)}
+.empty{margin-top:var(--s4); font-size:15px; line-height:1.65;
+  color:var(--slate); max-width:58ch}
+
+/* la console riusa fascia KPI e tabella: qui vanno riportate su fondo chiaro */
+.dialog .kpis{grid-template-columns:repeat(4,1fr); border-bottom:1px solid var(--line);
+  padding-top:0; margin-top:var(--s4)}
+.dialog .kpi{border-right:1px solid var(--line); padding:0 var(--s3) var(--s3) 0}
+.dialog .kpi:last-child{border-right:0}
+.dialog .kpi .t{color:var(--slate); margin-bottom:var(--s2)}
+.dialog .kpi .v{color:var(--ink); font-size:clamp(22px,2.3vw,29px)}
+.dialog .kpi:first-child .v{font-size:clamp(22px,2.3vw,29px)}
+.dialog .kpi .s{color:var(--slate); margin-top:var(--s1)}
+.dialog .tablewrap{padding-bottom:0}
+.dialog thead th{color:var(--slate); border-bottom-color:var(--ink)}
+.dialog thead th:hover{color:var(--ink)}
+.dialog tbody td{color:var(--ink); border-bottom-color:var(--line)}
+.dialog tbody td:first-child{color:var(--ink)}
+.dialog tbody tr:hover td{background:var(--mist-2)}
+.dialog tbody tr.total td{border-top-color:var(--ink); color:var(--ink)}
+
+/* ---------- stampa ---------- */
+#printsheet{display:none}
+@media print{
+  body>*{display:none !important}
+  #printsheet{display:block !important; background:#fff; color:#000;
+    font-family:var(--sans); font-size:10pt; padding:0 8mm}
+  #printsheet h1{font-family:var(--serif); font-weight:900; font-size:21pt;
+    letter-spacing:-0.03em; line-height:1}
+  #printsheet .k{font-family:var(--mono); font-size:7.5pt; letter-spacing:0.24em;
+    text-transform:uppercase; margin-bottom:3mm}
+  #printsheet .sub{font-size:9pt; margin:3mm 0 7mm; line-height:1.6}
+  #printsheet table{width:100%; border-collapse:collapse; font-family:var(--mono); font-size:8pt}
+  #printsheet th,#printsheet td{border-bottom:0.4pt solid #999; padding:1.7mm 1mm; text-align:right}
+  #printsheet th:first-child,#printsheet td:first-child{text-align:left; font-family:var(--sans)}
+  #printsheet th{border-bottom:0.8pt solid #000; font-size:7pt; letter-spacing:0.18em}
+  #printsheet .foot{margin-top:7mm; border-top:0.4pt solid #999; padding-top:2mm;
+    font-family:var(--mono); font-size:7pt; line-height:1.9}
+}
+
+
+/* ============================================================
+   MASTRO VENTURO — estensioni per il budget pluriennale
+   ============================================================ */
+
+/* selettore di scenario: tre stati, come le tab ma compatto */
+.scenari{display:flex; gap:0; border:1px solid var(--slate); margin-top:var(--s3); width:fit-content}
+.scenari button{border:0; border-right:1px solid var(--slate); padding:10px 20px;
+  color:var(--slate-2); background:transparent; letter-spacing:0.18em}
+.scenari button:last-child{border-right:0}
+.scenari button:hover{background:transparent; color:var(--paper)}
+.scenari button[aria-pressed="true"]{background:var(--mist); color:var(--ink-0)}
+
+/* pannello parametri globali: leve del listino di aumento */
+.assumi{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0;
+  border-top:1px solid var(--slate); border-bottom:1px solid var(--slate);
+  margin-top:var(--s3)}
+@media(max-width:900px){.assumi{grid-template-columns:repeat(2,1fr)}}
+.assumi .par{padding:var(--s3) var(--s3) var(--s3) 0; border-right:1px solid var(--slate)}
+.assumi .par:nth-child(4n){border-right:0}
+.assumi .par:not(:nth-child(-n+4)){border-top:1px solid var(--slate)}
+@media(max-width:900px){.assumi .par:nth-child(2n){border-right:0}
+  .assumi .par:not(:nth-child(-n+2)){border-top:1px solid var(--slate)}}
+.assumi label{display:block; font-family:var(--mono); font-size:9px; font-weight:500;
+  letter-spacing:0.2em; text-transform:uppercase; color:var(--line); margin-bottom:var(--s2)}
+.assumi .rowin{display:flex; align-items:baseline; gap:6px}
+.assumi input[type=number]{width:5.2ch; background:transparent; border:0;
+  border-bottom:1px solid var(--slate-2); color:var(--paper); border-radius:0;
+  font-family:var(--serif); font-weight:900; font-size:30px; letter-spacing:-0.03em;
+  padding:0 0 2px; text-align:left; -moz-appearance:textfield}
+.assumi input[type=number]::-webkit-outer-spin-button,
+.assumi input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none; margin:0}
+.assumi input:focus{outline:0; border-bottom-color:var(--amber)}
+.assumi .u{font-family:var(--mono); font-size:13px; color:var(--slate-2)}
+.assumi .hint{font-size:11px; color:var(--slate-2); margin-top:var(--s2); line-height:1.5; max-width:30ch}
+
+/* traiettoria: linea gia definita in .lchart, qui la banda di scenario */
+.lchart .band{position:absolute; background:var(--ink-2)}
+.lchart .seg.dash{opacity:1}
+.projgrid{display:grid; grid-template-columns:1.6fr 1fr 1.15fr 1fr 1fr 1fr; gap:0;
+  border-top:1px solid var(--mist); margin-top:var(--s4)}
+.projgrid .cell{padding:var(--s2) var(--s2) var(--s2) 0; border-right:1px solid var(--slate);
+  border-bottom:1px solid var(--slate)}
+.projgrid .cell:nth-child(6n){border-right:0}
+.projgrid .cell.num{text-align:right; cursor:help}
+.projgrid .cell.h{font-family:var(--mono); font-size:9px; letter-spacing:0.18em;
+  text-transform:uppercase; color:var(--line); border-bottom:1px solid var(--mist)}
+.projgrid .cell.h.num{text-align:right}
+.projgrid .cell.lbl{font-family:var(--sans); font-size:13px; color:var(--mist);
+  border-right:1px solid var(--mist)}
+.projgrid .cell .v{font-family:var(--mono); font-size:13.5px; color:var(--paper);
+  font-variant-numeric:tabular-nums}
+.projgrid .cell .d{font-family:var(--mono); font-size:10px; color:var(--slate-2); margin-top:3px}
+/* la fascia 2027 e l'anno successivo: si marca con superficie e amber */
+.projgrid .cell.now{background:var(--ink-2); border-right:1px solid var(--mist);
+  padding-left:var(--s2)}
+.projgrid .cell.h.now{background:var(--ink-2); color:var(--amber)}
+.projgrid .cell.now .v{color:var(--amber); font-weight:500}
+.projgrid .cell.base .v{color:var(--mist)}
+
+/* tabella funzioni con celle editabili */
+/* la tabella funzioni ha due zone: LEVE editabili e RISULTATI calcolati.
+   Le prime portano input in ambra su fondo rialzato; i secondi sono di sola
+   lettura. Un filetto pieno --mist separa le due zone. */
+.fedit thead th{padding-bottom:var(--s2)}
+.fedit .grp{font-family:var(--mono); font-size:8.5px; letter-spacing:0.24em;
+  text-transform:uppercase; color:var(--slate-2); font-weight:500;
+  padding:0 0 var(--s1); border:0}
+.fedit .grp.lev{color:var(--amber)}
+.fedit .zsep{border-left:1px solid var(--mist)}
+.fedit td.zsep{border-left:1px solid var(--mist)}
+.fedit .lev-cell{background:var(--ink); }
+.fedit .inwrap{display:inline-flex; align-items:baseline; gap:3px; justify-content:flex-end; width:100%}
+.fedit input{width:5ch; background:var(--ink-2); border:1px solid var(--amber-d);
+  color:var(--amber); border-radius:0; font-family:var(--mono); font-size:12px; font-weight:500;
+  padding:4px 6px; text-align:right; -moz-appearance:textfield}
+.fedit input:hover{border-color:var(--amber)}
+.fedit input:focus{outline:0; border-color:var(--amber); background:var(--ink)}
+.fedit input::-webkit-outer-spin-button,.fedit input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fedit .inwrap .u{font-family:var(--mono); font-size:10px; color:var(--slate-2)}
+.fedit td{padding:6px var(--s2) 6px 0}
+.fedit td.num{cursor:help}
+.fedit td.pos{color:var(--paper)}
+.fedit .ed{color:var(--amber)}
+
+/* note metodologiche: colonna di lettura lunga */
+.note-wrap{border-top:2px solid var(--mist); margin-top:var(--s5); padding-top:var(--s4);
+  padding-bottom:var(--s6)}
+.note-grid{display:grid; grid-template-columns:26% minmax(0,1fr); gap:var(--s5)}
+@media(max-width:1000px){.note-grid{grid-template-columns:1fr; gap:var(--s2)}}
+.note-item{display:contents}
+.note-blk{padding:var(--s3) 0; border-top:1px solid var(--slate); display:grid;
+  grid-template-columns:26% minmax(0,1fr); gap:var(--s5)}
+@media(max-width:1000px){.note-blk{grid-template-columns:1fr; gap:var(--s1)}}
+.note-blk .nh{font-family:var(--mono); font-size:9.5px; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--line); padding-left:var(--s2);
+  border-left:2px solid var(--slate)}
+.note-blk .nb{font-size:14.5px; line-height:1.68; color:var(--mist); max-width:66ch}
+.note-blk .nb p{max-width:66ch; margin-bottom:var(--s2)}
+.note-blk .nb p:last-child{margin-bottom:0}
+.note-blk .nb b{color:var(--paper)}
+.note-blk.warn .nh{border-left-color:var(--cherry)}
+
+
+/* ---------- callout: spiegazione del dato al passaggio ----------
+   Pannello unico riusato, posizionato via JS. Fondo chiaro sul mastro scuro,
+   stacco per superficie e non per ombra diffusa. */
+#callout{position:fixed; z-index:80; max-width:340px; background:var(--paper);
+  color:var(--ink); border:1px solid var(--ink); box-shadow:6px 6px 0 var(--ink-2);
+  padding:var(--s3); pointer-events:none; opacity:0; transition:opacity 90ms linear}
+#callout[data-on="1"]{opacity:1}
+#callout .co-k{font-family:var(--mono); font-size:8.5px; letter-spacing:0.24em;
+  text-transform:uppercase; color:var(--slate); margin-bottom:var(--s1)}
+#callout .co-v{font-family:var(--serif); font-weight:900; font-size:26px;
+  letter-spacing:-0.03em; line-height:1; color:var(--ink); margin-bottom:var(--s2)}
+#callout .co-b{font-size:13px; line-height:1.55; color:var(--ink); margin-bottom:var(--s2)}
+#callout .co-b:last-child{margin-bottom:0}
+#callout .co-b b{font-weight:500}
+#callout .co-form{font-family:var(--mono); font-size:11px; line-height:1.5;
+  color:var(--slate); padding-left:var(--s2); border-left:2px solid var(--amber);
+  margin-top:var(--s2)}
+#callout .co-hint{font-family:var(--mono); font-size:9px; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--slate-2); margin-top:var(--s2)}
+
+/* ---------- sezione ore: barra impilata di copertura ---------- */
+.orebars{margin-top:var(--s3)}
+.orebar-row{display:grid; grid-template-columns:11ch minmax(0,1fr) 11ch; align-items:center;
+  gap:var(--s2); padding:6px 0}
+.orebar-row .oy{font-family:var(--mono); font-size:10px; letter-spacing:0.14em;
+  text-transform:uppercase; color:var(--line)}
+.orebar-row .ov{font-family:var(--mono); font-size:11.5px; color:var(--paper);
+  text-align:right; font-variant-numeric:tabular-nums}
+.orebar-row .hstack{height:26px; margin:0; cursor:help; border:1px solid var(--slate-2)}
+.oretbl .num{cursor:help}
+
