@@ -1,0 +1,108 @@
+/* Palette identica a css/shell.css della web app */
+* {
+    -ink: #0F1C1A;
+    -ink-2: #152926;
+    -ink-3: #1E3733;
+    -line: #284440;
+    -paper: #F4F1E8;
+    -paper-2: #ECE7DA;
+    -paper-line: #D9D2C1;
+    -text: #E9EFEB;
+    -dim: #9DB1AB;
+    -ink-text: #152220;
+    -amber: #D19A3E;
+    -amber-d: #A8781F;
+    -pos: #5AA783;
+    -neg: #C25B44;
+}
+
+.root {
+    -fx-background-color: -ink;
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 13px;
+    -fx-text-fill: -text;
+}
+
+/* ---- header ---- */
+.header-bar {
+    -fx-background-color: linear-gradient(to bottom, #16302b, #0f211e);
+    -fx-border-color: transparent transparent -line transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 12 20 12 20;
+}
+.brand-title { -fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: -text; }
+.brand-sub { -fx-font-size: 11px; -fx-text-fill: -dim; }
+.src-chip {
+    -fx-font-size: 10.5px; -fx-text-fill: -dim; -fx-border-color: -line; -fx-border-radius: 2;
+    -fx-padding: 4 8 4 8; -fx-background-radius: 2;
+}
+.src-chip .amber { -fx-text-fill: -amber; -fx-font-weight: bold; }
+
+/* ---- nav tabs ---- */
+.nav-tabs .tab-header-area { -fx-padding: 0; }
+.nav-tabs .tab-header-background { -fx-background-color: transparent; }
+.nav-tabs .tab {
+    -fx-background-color: -ink;
+    -fx-background-radius: 2;
+    -fx-padding: 8 14 8 14;
+}
+.nav-tabs .tab:selected { -fx-background-color: -amber; }
+.nav-tabs .tab .tab-label { -fx-text-fill: -dim; -fx-font-weight: bold; -fx-font-size: 12px; }
+.nav-tabs .tab:selected .tab-label { -fx-text-fill: #241a06; }
+.nav-tabs .tab-content-area { -fx-background-color: -ink; }
+
+/* ---- data bar buttons ---- */
+.bn-btn {
+    -fx-background-color: -ink-2; -fx-text-fill: -text; -fx-border-color: -line;
+    -fx-border-radius: 3; -fx-background-radius: 3; -fx-padding: 6 10 6 10; -fx-font-size: 11px;
+}
+.bn-btn:hover { -fx-border-color: -amber-d; }
+.bn-status { -fx-text-fill: -dim; -fx-font-size: 10.5px; -fx-border-color: -line; -fx-border-radius: 2; -fx-padding: 4 8 4 8; }
+.bn-status.loaded { -fx-text-fill: -pos; -fx-border-color: -pos; }
+
+/* ---- view titles ---- */
+.eyebrow { -fx-text-fill: -amber; -fx-font-size: 11px; -fx-font-weight: bold; }
+.view-title { -fx-text-fill: -text; -fx-font-size: 22px; -fx-font-weight: bold; }
+.lede { -fx-text-fill: -dim; -fx-font-size: 12.5px; -fx-wrap-text: true; }
+
+/* ---- KPI cards ---- */
+.kpi-card {
+    -fx-background-color: -ink-2; -fx-border-color: -line; -fx-border-radius: 4; -fx-background-radius: 4;
+    -fx-padding: 14 16 14 16;
+    -fx-border-width: 0 0 0 3; -fx-border-color: -amber -line -line -line;
+}
+.kpi-label { -fx-text-fill: -dim; -fx-font-size: 10.5px; -fx-font-weight: bold; }
+.kpi-value { -fx-text-fill: -text; -fx-font-size: 22px; -fx-font-weight: bold; }
+.kpi-sub { -fx-text-fill: -dim; -fx-font-size: 11px; }
+.kpi-sub.up { -fx-text-fill: -neg; }
+.kpi-sub.down { -fx-text-fill: -pos; }
+
+/* ---- panels ---- */
+.panel { -fx-background-color: -ink-2; -fx-border-color: -line; -fx-border-radius: 4; -fx-background-radius: 4; -fx-padding: 14; }
+.panel-title { -fx-text-fill: -text; -fx-font-size: 13px; -fx-font-weight: bold; }
+
+/* ---- ledger tree table (paper theme, come la web app) ---- */
+.ledger-table {
+    -fx-background-color: -paper;
+    -fx-border-color: -paper-line;
+}
+.ledger-table .column-header-background { -fx-background-color: -paper-2; }
+.ledger-table .column-header .label {
+    -fx-text-fill: #4a5450; -fx-font-size: 10.5px; -fx-font-weight: bold;
+}
+.ledger-table .table-row-cell, .ledger-table .tree-table-row-cell {
+    -fx-background-color: -paper; -fx-text-fill: -ink-text; -fx-border-color: transparent transparent -paper-line transparent;
+}
+.ledger-table .table-row-cell:odd, .ledger-table .tree-table-row-cell:odd { -fx-background-color: -paper; }
+.ledger-table .table-cell, .ledger-table .tree-table-cell { -fx-text-fill: -ink-text; -fx-alignment: CENTER_RIGHT; }
+.ledger-table .lvl0 { -fx-background-color: #EDE8DB; -fx-font-weight: bold; }
+.ledger-table .lvl1 { -fx-background-color: #F1ECE0; }
+.ledger-table .total-row { -fx-background-color: -ink-3; }
+.ledger-table .total-row .table-cell, .ledger-table .total-row .tree-table-cell { -fx-text-fill: -text; -fx-font-weight: bold; }
+
+/* ---- generic controls ---- */
+.combo-box, .text-field { -fx-background-color: -ink-2; -fx-text-fill: -text; -fx-border-color: -line; -fx-border-radius: 3; }
+.combo-box .list-cell { -fx-text-fill: -text; -fx-background-color: -ink-2; }
+.label-caps { -fx-text-fill: -dim; -fx-font-size: 10.5px; -fx-font-weight: bold; }
+
+.foot-note { -fx-text-fill: -dim; -fx-font-size: 11px; }

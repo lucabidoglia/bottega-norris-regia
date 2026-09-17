@@ -13,6 +13,8 @@ questo repository**: l'app pubblicata funziona con dati demo (inventati) e
 carica i dati reali solo localmente, nel browser di chi la usa — vedi
 [docs/05-data-model-e-privacy.md](docs/05-data-model-e-privacy.md).
 
+> Cerchi l'app desktop (Java/JavaFX, nessun browser)? È in [desktop/](desktop/README.md) — stesse 5 viste, stesso motore di calcolo, stessi principi sui dati.
+
 ## Avvio rapido
 
 Nessuna installazione richiesta. Da questa cartella:
