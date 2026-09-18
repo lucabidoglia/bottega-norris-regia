@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bottega Norris — Regia del costo del lavoro</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0F1C1A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Regia Norris">
+<link rel="apple-touch-icon" href="assets/icons/icon-512.png">
+<link rel="icon" href="assets/icons/icon-192.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <link rel="stylesheet" href="css/shell.css">
 <style>
@@ -116,5 +124,10 @@ BNStore.wireReset('btn-reset-demo');
 BNStore.markIfOverridden('bn-status');
 </script>
 <script src="js/shell.js"></script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
 </body>
 </html>

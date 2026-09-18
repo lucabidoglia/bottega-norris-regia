@@ -1,0 +1,18 @@
+{
+  "name": "Bottega Norris — Regia del costo del lavoro",
+  "short_name": "Regia Norris",
+  "description": "Costi effettivi, analisi, budget, confronto anno su anno e ferie residue.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0F1C1A",
+  "theme_color": "#0F1C1A",
+  "lang": "it",
+  "icons": [
+    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
