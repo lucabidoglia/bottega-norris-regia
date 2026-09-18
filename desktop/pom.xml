@@ -14,10 +14,13 @@
     <maven.compiler.target>21</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javafx.version>21.0.2</javafx.version>
-    <jackson.version>2.17.2</jackson.version>
     <main.class>it.bottenorris.regia.Main</main.class>
   </properties>
 
+  <!-- Nessuna dipendenza esterna oltre JavaFX: il parsing JSON (util/Json.java)
+       e l'export xlsx (util/XlsxWriter.java) sono scritti a mano, cosi' l'app
+       resta un modulo Java pulito, impacchettabile con jlink/jpackage senza
+       i problemi dei "moduli automatici" (es. Jackson) che jlink non gestisce. -->
   <dependencies>
     <dependency>
       <groupId>org.openjfx</groupId>
@@ -33,11 +36,6 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-base</artifactId>
       <version>${javafx.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-databind</artifactId>
-      <version>${jackson.version}</version>
     </dependency>
   </dependencies>
 

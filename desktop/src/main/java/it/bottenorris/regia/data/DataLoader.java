@@ -1,10 +1,10 @@
 package it.bottenorris.regia.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.core.type.TypeReference;
 import it.bottenorris.regia.model.*;
+import it.bottenorris.regia.util.Json;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.util.*;
 
@@ -17,7 +17,6 @@ import java.util.*;
  * "Ripristina demo".
  */
 public class DataLoader {
-    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static Path appDataDir() {
         String home = System.getProperty("user.home");
@@ -30,7 +29,6 @@ public class DataLoader {
         return appDataDir().resolve(name + ".json");
     }
 
-    /** true se esiste un override locale per quella chiave ("raw"/"ferie"/"ds"). */
     public static boolean hasLocalOverride(String key) {
         return Files.exists(localFile(key));
     }
@@ -39,7 +37,6 @@ public class DataLoader {
         return hasLocalOverride("raw") || hasLocalOverride("ferie") || hasLocalOverride("ds");
     }
 
-    /** Salva il file scelto dall'utente come override locale persistente. */
     public static void saveOverride(String key, Path sourceFile) throws IOException {
         Files.copy(sourceFile, localFile(key), StandardCopyOption.REPLACE_EXISTING);
     }
@@ -50,7 +47,6 @@ public class DataLoader {
         }
     }
 
-    /** Carica lo stato completo: override locali se presenti, altrimenti dati demo incorporati. */
     public static DataStore load() throws IOException {
         DataStore store = new DataStore();
         loadRaw(store);
@@ -59,55 +55,63 @@ public class DataLoader {
         return store;
     }
 
-    private static InputStream openRaw(String key) throws IOException {
+    private static String readAll(String key) throws IOException {
         Path local = localFile(key);
-        if (Files.exists(local)) return Files.newInputStream(local);
-        return DataLoader.class.getResourceAsStream("/demo/" + key + ".json");
+        if (Files.exists(local)) return Files.readString(local, StandardCharsets.UTF_8);
+        try (InputStream in = DataLoader.class.getResourceAsStream("/demo/" + key + ".json")) {
+            if (in == null) throw new IOException("risorsa demo mancante: " + key);
+            return new String(in.readAllBytes(), StandardCharsets.UTF_8);
+        }
     }
 
     @SuppressWarnings("unchecked")
     private static void loadRaw(DataStore store) throws IOException {
-        try (InputStream in = openRaw("raw")) {
-            Map<String, Map<String, List<CostoRecord>>> parsed = MAPPER.readValue(in,
-                    new TypeReference<Map<String, Map<String, List<CostoRecord>>>>() {});
-            store.raw = parsed;
+        Map<String, Object> parsed = (Map<String, Object>) Json.parse(readAll("raw"));
+        Map<String, Map<String, List<CostoRecord>>> raw = new LinkedHashMap<>();
+        for (var yEntry : parsed.entrySet()) {
+            Map<String, List<CostoRecord>> months = new LinkedHashMap<>();
+            for (var mEntry : Json.map(yEntry.getValue()).entrySet()) {
+                List<CostoRecord> rows = new ArrayList<>();
+                for (Object rowObj : Json.list(mEntry.getValue())) rows.add(CostoRecord.fromMap(Json.map(rowObj)));
+                months.put(mEntry.getKey(), rows);
+            }
+            raw.put(yEntry.getKey(), months);
         }
+        store.raw = raw;
     }
 
     private static void loadFerie(DataStore store) throws IOException {
-        try (InputStream in = openRaw("ferie")) {
-            Map<String, Object> parsed = MAPPER.readValue(in, new TypeReference<Map<String, Object>>() {});
-            store.ferieAggiornato = String.valueOf(parsed.getOrDefault("aggiornato", ""));
-            List<FerieRecord> rows = MAPPER.convertValue(parsed.get("rows"), new TypeReference<List<FerieRecord>>() {});
-            store.ferie = rows != null ? rows : new ArrayList<>();
-        }
+        Map<String, Object> parsed = Json.map(Json.parse(readAll("ferie")));
+        store.ferieAggiornato = Json.str(parsed, "aggiornato", "");
+        List<FerieRecord> rows = new ArrayList<>();
+        for (Object rowObj : Json.list(parsed.get("rows"))) rows.add(FerieRecord.fromMap(Json.map(rowObj)));
+        store.ferie = rows;
     }
 
-    @SuppressWarnings("unchecked")
     private static void loadDs(DataStore store) throws IOException {
-        try (InputStream in = openRaw("ds")) {
-            Map<String, Object> parsed = MAPPER.readValue(in, new TypeReference<Map<String, Object>>() {});
-            List<String> months = MAPPER.convertValue(parsed.get("months"), new TypeReference<List<String>>() {});
-            List<DsRecord> rows = MAPPER.convertValue(parsed.get("rows"), new TypeReference<List<DsRecord>>() {});
-            store.dsMonths = months != null ? months : new ArrayList<>();
-            store.ds = rows != null ? rows : new ArrayList<>();
-        }
+        Map<String, Object> parsed = Json.map(Json.parse(readAll("ds")));
+        List<String> months = new ArrayList<>();
+        for (Object o : Json.list(parsed.get("months"))) months.add(String.valueOf(o));
+        List<DsRecord> rows = new ArrayList<>();
+        for (Object rowObj : Json.list(parsed.get("rows"))) rows.add(DsRecord.fromMap(Json.map(rowObj)));
+        store.dsMonths = months;
+        store.ds = rows;
     }
 
     /** Validazione leggera prima di accettare un file come override "raw". */
     public static void validateRawFile(Path file) throws IOException {
-        Object parsed = MAPPER.readValue(file.toFile(), Object.class);
-        if (!(parsed instanceof Map)) throw new IOException("atteso un oggetto {\"2025\":{\"Gennaio\":[...]}}, trovato: " + parsed.getClass().getSimpleName());
+        Object parsed = Json.parse(Files.readString(file, StandardCharsets.UTF_8));
+        if (!(parsed instanceof Map)) throw new IOException("atteso un oggetto {\"2025\":{\"Gennaio\":[...]}}, trovato un valore diverso");
     }
 
     public static void validateFerieFile(Path file) throws IOException {
-        Object parsed = MAPPER.readValue(file.toFile(), Object.class);
+        Object parsed = Json.parse(Files.readString(file, StandardCharsets.UTF_8));
         if (!(parsed instanceof Map) || !((Map<?, ?>) parsed).containsKey("rows"))
             throw new IOException("atteso un oggetto {\"aggiornato\":\"...\",\"rows\":[...]}");
     }
 
     public static void validateDsFile(Path file) throws IOException {
-        Object parsed = MAPPER.readValue(file.toFile(), Object.class);
+        Object parsed = Json.parse(Files.readString(file, StandardCharsets.UTF_8));
         if (!(parsed instanceof Map) || !((Map<?, ?>) parsed).containsKey("rows"))
             throw new IOException("atteso un oggetto {\"rows\":[...],\"months\":[...]}");
     }
